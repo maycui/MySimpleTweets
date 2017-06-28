@@ -65,6 +65,8 @@ public class Tweet implements Parcelable {
         return tweet;
     }
 
+
+
     public String getBody() {
         return body;
     }
