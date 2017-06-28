@@ -65,6 +65,18 @@ public class Tweet implements Parcelable {
         return tweet;
     }
 
+//    public static ArrayList<Tweet> fromJSONArray(JSONArray jsonArray) {
+//        ArrayList<Tweet> results = new ArrayList<>();
+//        for (int i = 0; i < jsonArray.length(); i++) {
+//            try {
+//                results.add(Tweet.fromJSON(jsonArray.getJSONObject(i)));
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return results;
+//    }
+
 
 
     public String getBody() {

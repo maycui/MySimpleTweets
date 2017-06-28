@@ -3,10 +3,13 @@ package com.codepath.apps.restclienttemplate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -23,6 +26,7 @@ public class ComposeActivity extends AppCompatActivity {
 
     private TwitterClient client;
     EditText editText;
+    TextView charCount;
     Tweet newTweet;
     View view;
 
@@ -33,8 +37,20 @@ public class ComposeActivity extends AppCompatActivity {
 
         client = TwitterApp.getRestClient();
         editText = (EditText) findViewById(R.id.editText);
+        charCount = (TextView) findViewById(R.id.charCount);
+        charCount.setText(String.valueOf(140));
 
+        final TextWatcher txwatcher = new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                charCount.setText(String.valueOf(140 - s.length()));
+            }
+            public void afterTextChanged(Editable s) {
+            }
+        };
 
+        editText.addTextChangedListener(txwatcher);
 
         //configuring the button
         Button button = (Button) findViewById(R.id.tweetB);
@@ -88,6 +104,7 @@ public class ComposeActivity extends AppCompatActivity {
         setResult(RESULT_OK, data); // set result code and bundle data for response
         finish(); // closes the activity, pass data to parent
     }
+
 
 
 }
