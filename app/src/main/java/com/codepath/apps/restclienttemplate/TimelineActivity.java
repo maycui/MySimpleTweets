@@ -75,7 +75,7 @@ public class TimelineActivity extends AppCompatActivity {
         client = TwitterApp.getRestClient();
         rvTweets = (RecyclerView) findViewById(R.id.rvTweet);
         tweets = new ArrayList<>();
-        //construct the adapter from this datasource
+        //construct the adapter from this data source
         tweetAdapter = new TweetAdapter(tweets);
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
         rvTweets.setAdapter(tweetAdapter);
@@ -87,9 +87,7 @@ public class TimelineActivity extends AppCompatActivity {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                tweetAdapter.clear();
-                populateTimeline();
-                swipeContainer.setRefreshing(false);
+                fetchTimelineAsync(0);
             }
         });
         // Configure the refreshing colors
@@ -97,6 +95,11 @@ public class TimelineActivity extends AppCompatActivity {
 
     }
 
+    public void fetchTimelineAsync(int page) {
+        tweetAdapter.clear();
+        populateTimeline();
+        swipeContainer.setRefreshing(false);
+    }
 
 
     private void populateTimeline() {
@@ -106,7 +109,6 @@ public class TimelineActivity extends AppCompatActivity {
                 Log.d("TwitterClient", response.toString());
                 //iterate through the JSON array
                 // for each entry deserialize the object
-
                 for (int i = 0 ; i < response.length(); i++) {
                     //convert each object to a tweet model
                     // add that tweet model to our data source
@@ -118,8 +120,6 @@ public class TimelineActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
                 }
 
             }
