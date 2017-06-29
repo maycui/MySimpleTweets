@@ -36,12 +36,12 @@ public class TweetDetailsActivity extends AppCompatActivity {
         tweet =  Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
 
         //set the stuff
-        tvUserName.setText(tweet.user.name);
+        tvUserName.setText(tweet.getUser().getName());
         tvBody.setText(tweet.getBody());
-        screenName.setText("@" + tweet.user.screenName);
+        screenName.setText("@" + tweet.getUser().getScreenName());
 
         Glide.with(context)
-                .load(tweet.user.profileImageUrl)
+                .load(tweet.getUser().getProfileImageUrl())
                 .bitmapTransform(new RoundedCornersTransformation(context, 10, 0))
                 .into(ProfileImage);
 

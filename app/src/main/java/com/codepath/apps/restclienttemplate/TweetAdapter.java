@@ -54,38 +54,39 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         final Tweet tweet = mTweets.get(position);
-        holder.tvUsername.setText(tweet.user.name);
-        holder.screenName.setText("@" + tweet.user.screenName);
-        holder.tvBody.setText(tweet.body);
-        holder.time.setText(getRelativeTimeAgo(tweet.createdAt));
+        holder.tvUsername.setText(tweet.getUser().getName());
+        holder.screenName.setText("@" + tweet.getUser().getScreenName());
+        holder.tvBody.setText(tweet.getBody());
+        holder.time.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
+
+        //setting the likes, retweets, and other info
+        holder.retweetN.setText(String.valueOf(tweet.getRetweetCount()));
+        holder.likeN.setText(String.valueOf(tweet.getFavoritesCount()));
+        holder.replyN.setText("");
 
         //setting tints
         int highlightColor = context.getResources().getColor(R.color.grey);
         PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(highlightColor, PorterDuff.Mode.SRC_ATOP);
-
-        //Paint greyHighLight = new Paint();
-        //greyHighLight.setColorFilter(colorFilter);
-        //greyHighLight.setAlpha(190);
 
         holder.like.getDrawable().setColorFilter(colorFilter);
         holder.retweet.getDrawable().setColorFilter(colorFilter);
         holder.dm.getDrawable().setColorFilter(colorFilter);
 
 
-
-
+        //set profile image
         Glide.with(context)
-                .load(tweet.user.profileImageUrl)
+                .load(tweet.getUser().getProfileImageUrl())
                 .bitmapTransform(new RoundedCornersTransformation(context, 10, 0))
                 .into(holder.ivProfileImage);
 
 
+        //reply
         holder.reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tweet.user.screenName != null) {
+                if (tweet.getUser().getScreenName() != null) {
                     Intent intent = new Intent(context, ComposeActivity.class);
-                    intent.putExtra(SCREEN_NAME, tweet.user.screenName);
+                    intent.putExtra(SCREEN_NAME, tweet.getUser().getScreenName());
                     intent.putExtra(TWEET_ID, tweet.getUid());
                     context.startActivity(intent);
                 }
@@ -133,6 +134,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public ImageView like;
         public ImageView retweet;
         public ImageView dm;
+        public TextView replyN;
+        public TextView likeN;
+        public TextView retweetN;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -146,6 +150,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             like = (ImageView) itemView.findViewById(R.id.like);
             retweet = (ImageView) itemView.findViewById(R.id.rt);
             dm = (ImageView) itemView.findViewById(R.id.dm);
+            replyN = (TextView) itemView.findViewById(R.id.replyN);
+            likeN = (TextView) itemView.findViewById(R.id.likeN);
+            retweetN = (TextView) itemView.findViewById(R.id.rtN);
             itemView.setOnClickListener(this);
         }
 

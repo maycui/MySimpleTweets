@@ -16,6 +16,9 @@ public class Tweet implements Parcelable {
     public long uid;
     public User user;
     public String createdAt;
+    public Integer retweetCount;
+    public Integer favoritesCount;
+    //public Integer replyCount;
 
 
     protected Tweet(Parcel in) {
@@ -23,6 +26,9 @@ public class Tweet implements Parcelable {
         uid = in.readLong();
         user = in.readParcelable(User.class.getClassLoader());
         createdAt = in.readString();
+        retweetCount = in.readInt();
+        favoritesCount= in.readInt();
+        //replyCount = in.readInt();
     }
 
     public Tweet() {
@@ -35,6 +41,9 @@ public class Tweet implements Parcelable {
         dest.writeLong(uid);
         dest.writeParcelable(user, flags);
         dest.writeString(createdAt);
+        dest.writeLong(retweetCount);
+        dest.writeLong(favoritesCount);
+        //dest.writeLong(replyCount);
     }
 
     @Override
@@ -62,21 +71,10 @@ public class Tweet implements Parcelable {
         tweet.uid = jsonObject.getLong("id");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+        tweet.favoritesCount = jsonObject.getInt("favorite_count");
+        tweet.retweetCount = jsonObject.getInt("retweet_count");
         return tweet;
     }
-
-//    public static ArrayList<Tweet> fromJSONArray(JSONArray jsonArray) {
-//        ArrayList<Tweet> results = new ArrayList<>();
-//        for (int i = 0; i < jsonArray.length(); i++) {
-//            try {
-//                results.add(Tweet.fromJSON(jsonArray.getJSONObject(i)));
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return results;
-//    }
-
 
 
     public String getBody() {
@@ -94,4 +92,13 @@ public class Tweet implements Parcelable {
     public String getCreatedAt() {
         return createdAt;
     }
+
+    public Integer getRetweetCount() {
+        return retweetCount;
+    }
+
+    public Integer getFavoritesCount() {
+        return favoritesCount;
+    }
+
 }

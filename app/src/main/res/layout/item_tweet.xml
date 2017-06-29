@@ -73,6 +73,7 @@
         android:id="@+id/rt"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:layout_marginLeft="15dp"
         app:srcCompat="@drawable/ic_vector_retweet_stroke"
         android:layout_below="@+id/text"
         android:layout_toEndOf="@+id/replyN" />
@@ -81,6 +82,7 @@
         android:id="@+id/like"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:layout_marginLeft="15dp"
         app:srcCompat="@drawable/ic_vector_heart_stroke"
         android:layout_alignTop="@+id/rtN"
         android:layout_toEndOf="@+id/rtN" />
@@ -89,8 +91,9 @@
         android:id="@+id/dm"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:layout_marginLeft="15dp"
         app:srcCompat="@drawable/ic_vector_messages_stroke"
-        android:layout_alignTop="@+id/rt"
+        android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/likeN" />
 
     <TextView
@@ -98,6 +101,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:layout_marginLeft="5dp"
         android:layout_alignBottom="@+id/rt"
         android:layout_toEndOf="@+id/reply" />
 
@@ -106,6 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:layout_marginLeft="5dp"
         android:layout_alignBaseline="@+id/replyN"
         android:layout_alignBottom="@+id/replyN"
         android:layout_toEndOf="@+id/rt" />
@@ -114,6 +119,7 @@
         android:id="@+id/likeN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:layout_alignTop="@+id/like"
         android:layout_toEndOf="@+id/like"
         android:text="TextView" /><![CDATA[

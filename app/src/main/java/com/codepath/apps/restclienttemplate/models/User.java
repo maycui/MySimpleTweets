@@ -61,4 +61,20 @@ public class User implements Parcelable {
         dest.writeString(screenName);
         dest.writeString(profileImageUrl);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public long getUid() {
+        return uid;
+    }
+
+    public String getScreenName() {
+        return screenName;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
 }
