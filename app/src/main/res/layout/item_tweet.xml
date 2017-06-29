@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:layout_margin="5dp"
     android:layout_width="match_parent" android:layout_height="wrap_content">
@@ -60,34 +61,63 @@
 
     <ImageView
         android:id="@+id/reply"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignStart="@+id/text"
         android:layout_below="@+id/text"
         android:adjustViewBounds="true"
         app:srcCompat="@drawable/reply" />
 
+
     <ImageView
         android:id="@+id/rt"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/ic_vector_retweet_stroke"
         android:layout_below="@+id/text"
-        android:layout_toEndOf="@+id/reply"
-        app:srcCompat="@drawable/ic_vector_retweet_stroke" />
+        android:layout_toEndOf="@+id/replyN" />
 
     <ImageView
         android:id="@+id/like"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignTop="@+id/rt"
-        android:layout_toEndOf="@+id/rt"
-        app:srcCompat="@drawable/ic_vector_heart_stroke" />
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/ic_vector_heart_stroke"
+        android:layout_alignTop="@+id/rtN"
+        android:layout_toEndOf="@+id/rtN" />
 
     <ImageView
         android:id="@+id/dm"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@drawable/ic_vector_messages_stroke"
+        android:layout_alignTop="@+id/rt"
+        android:layout_toEndOf="@+id/likeN" />
+
+    <TextView
+        android:id="@+id/replyN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_alignBottom="@+id/rt"
+        android:layout_toEndOf="@+id/reply" />
+
+    <TextView
+        android:id="@+id/rtN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_alignBaseline="@+id/replyN"
+        android:layout_alignBottom="@+id/replyN"
+        android:layout_toEndOf="@+id/rt" />
+
+    <TextView
+        android:id="@+id/likeN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/like"
         android:layout_toEndOf="@+id/like"
-        app:srcCompat="@drawable/ic_vector_messages_stroke" />//android:layout_toEndOf="@+id/ivProfileImage" />
+        android:text="TextView" /><![CDATA[
+
+    //android:layout_toEndOf="@+id/ivProfileImage" />
+]]>
 </RelativeLayout>

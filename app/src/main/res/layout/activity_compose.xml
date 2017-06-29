@@ -7,15 +7,16 @@
     tools:context="com.codepath.apps.restclienttemplate.ComposeActivity">
 
 
-        <EditText
-            android:id="@+id/editText"
-            android:maxLength="140"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:hint="What's happening?"
-        android:selectAllOnFocus="false"></EditText>
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="18dp"
+        android:hint="what's happening?"
+        android:maxLength="140"
+        android:selectAllOnFocus="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"></EditText>
 
 
 

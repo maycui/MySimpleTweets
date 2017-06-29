@@ -2,6 +2,8 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -30,6 +32,8 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
     public List<Tweet> mTweets;
     Context context;
+    public final String SCREEN_NAME = "screenname";
+    public final String TWEET_ID = "tweetid";
 
     //pass in the Tweets array in the constructor
     public TweetAdapter(List<Tweet> tweets) {
@@ -48,15 +52,47 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     // bind the values based on the position of the element
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Tweet tweet = mTweets.get(position);
+
+        final Tweet tweet = mTweets.get(position);
         holder.tvUsername.setText(tweet.user.name);
         holder.screenName.setText("@" + tweet.user.screenName);
         holder.tvBody.setText(tweet.body);
         holder.time.setText(getRelativeTimeAgo(tweet.createdAt));
+
+        //setting tints
+        int highlightColor = context.getResources().getColor(R.color.grey);
+        PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(highlightColor, PorterDuff.Mode.SRC_ATOP);
+
+        //Paint greyHighLight = new Paint();
+        //greyHighLight.setColorFilter(colorFilter);
+        //greyHighLight.setAlpha(190);
+
+        holder.like.getDrawable().setColorFilter(colorFilter);
+        holder.retweet.getDrawable().setColorFilter(colorFilter);
+        holder.dm.getDrawable().setColorFilter(colorFilter);
+
+
+
+
         Glide.with(context)
                 .load(tweet.user.profileImageUrl)
                 .bitmapTransform(new RoundedCornersTransformation(context, 10, 0))
                 .into(holder.ivProfileImage);
+
+
+        holder.reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tweet.user.screenName != null) {
+                    Intent intent = new Intent(context, ComposeActivity.class);
+                    intent.putExtra(SCREEN_NAME, tweet.user.screenName);
+                    intent.putExtra(TWEET_ID, tweet.getUid());
+                    context.startActivity(intent);
+                }
+            }
+        });
+
+
     }
 
     @Override
@@ -93,6 +129,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public TextView tvBody;
         public TextView screenName;
         public TextView time;
+        public ImageView reply;
+        public ImageView like;
+        public ImageView retweet;
+        public ImageView dm;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -102,6 +142,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvBody = (TextView) itemView.findViewById(R.id.text);
             screenName = (TextView) itemView.findViewById(R.id.screen);
             time = (TextView) itemView.findViewById(R.id.time);
+            reply = (ImageView) itemView.findViewById(R.id.reply);
+            like = (ImageView) itemView.findViewById(R.id.like);
+            retweet = (ImageView) itemView.findViewById(R.id.rt);
+            dm = (ImageView) itemView.findViewById(R.id.dm);
             itemView.setOnClickListener(this);
         }
 
@@ -115,6 +159,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 context.startActivity(intent);
             }
         }
+
+
     }
 
 

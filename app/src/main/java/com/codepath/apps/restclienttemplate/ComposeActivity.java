@@ -29,16 +29,31 @@ public class ComposeActivity extends AppCompatActivity {
     TextView charCount;
     Tweet newTweet;
     View view;
+    String screenName;
+    String uid;
+
+    public final String SCREEN_NAME = "screenname";
+    public final String TWEET_ID = "tweetid";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
 
+
+        Intent intent = getIntent();
+        screenName = intent.getStringExtra(SCREEN_NAME);
+        uid = intent.getStringExtra(TWEET_ID);
+
         client = TwitterApp.getRestClient();
         editText = (EditText) findViewById(R.id.editText);
         charCount = (TextView) findViewById(R.id.charCount);
         charCount.setText(String.valueOf(140));
+
+        if (screenName != null) {
+            editText.setText("@" + screenName);
+        }
 
         final TextWatcher txwatcher = new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -56,39 +71,74 @@ public class ComposeActivity extends AppCompatActivity {
         Button button = (Button) findViewById(R.id.tweetB);
         button.setOnClickListener(new View.OnClickListener() {
 
-
-
             public void onClick(View v) {
                 // send network request
                 view = v;
-                client.sendTweet(editText.getText().toString(), new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        try {
-                            Toast.makeText(ComposeActivity.this, "hello", Toast.LENGTH_SHORT).show();
-                            newTweet = Tweet.fromJSON(response);
-                            onSubmit(view);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+
+                if (uid != null) {
+                    client.sendReplyTweet(editText.getText().toString(), uid, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            try {
+                                Toast.makeText(ComposeActivity.this, "hello", Toast.LENGTH_SHORT).show();
+                                newTweet = Tweet.fromJSON(response);
+                                onSubmit(view);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                        Log.d("TwitterClient", responseString);
-                        throwable.printStackTrace();
-                    }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        Log.d("TwitterClient", errorResponse.toString());
-                        throwable.printStackTrace();
-                    }
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            Log.d("TwitterClient", responseString);
+                            throwable.printStackTrace();
+                        }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                        Log.d("TwitterClient", errorResponse.toString());
-                        throwable.printStackTrace();            }
-                });
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Log.d("TwitterClient", errorResponse.toString());
+                            throwable.printStackTrace();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                            Log.d("TwitterClient", errorResponse.toString());
+                            throwable.printStackTrace();
+                        }
+                    });
+
+                } else {
+                    client.sendTweet(editText.getText().toString(), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            try {
+                                newTweet = Tweet.fromJSON(response);
+                                onSubmit(view);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            Log.d("TwitterClient", responseString);
+                            throwable.printStackTrace();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Log.d("TwitterClient", errorResponse.toString());
+                            throwable.printStackTrace();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                            Log.d("TwitterClient", errorResponse.toString());
+                            throwable.printStackTrace();
+                        }
+                    });
+
+            }
             }
         });
 
