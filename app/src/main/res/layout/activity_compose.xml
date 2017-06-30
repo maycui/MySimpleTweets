@@ -19,14 +19,18 @@
         android:layout_alignParentStart="true"></EditText>
 
 
-
     <Button
         android:id="@+id/tweetB"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/editText"
-        android:text="Tweet" />
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="19dp"
+        android:background="@drawable/tweet_butto"
+        android:text="Tweet"
+        android:textAllCaps="false" />
 
     <TextView
         android:id="@+id/charCount"
@@ -37,5 +41,31 @@
         android:layout_alignBaseline="@+id/tweetB"
         android:layout_alignBottom="@+id/tweetB"
         android:layout_toStartOf="@+id/tweetB" />
+
+    <ImageView
+        android:id="@+id/png"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/tweetB"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="15dp"
+        app:srcCompat="@drawable/ic_vector_photo_stroke" />
+
+    <ImageView
+        android:id="@+id/gif"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignTop="@+id/png"
+        android:layout_toEndOf="@+id/png"
+        android:layout_marginRight="15dp"
+        app:srcCompat="@drawable/ic_vector_gif_pill_stroke" />
+
+    <ImageView
+        android:id="@+id/location"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignTop="@+id/gif"
+        android:layout_toEndOf="@+id/gif"
+        app:srcCompat="@drawable/ic_vector_location_stroke" />
 
 </RelativeLayout>

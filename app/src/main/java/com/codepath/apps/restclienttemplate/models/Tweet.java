@@ -15,6 +15,7 @@ public class Tweet implements Parcelable {
     public String body;
     public long uid;
     public User user;
+    public String mediaURL;
     public String createdAt;
     public Integer retweetCount;
     public Integer favoritesCount;
@@ -28,6 +29,7 @@ public class Tweet implements Parcelable {
         createdAt = in.readString();
         retweetCount = in.readInt();
         favoritesCount= in.readInt();
+        mediaURL = in.readString();
         //replyCount = in.readInt();
     }
 
@@ -43,6 +45,7 @@ public class Tweet implements Parcelable {
         dest.writeString(createdAt);
         dest.writeLong(retweetCount);
         dest.writeLong(favoritesCount);
+        dest.writeString(mediaURL);
         //dest.writeLong(replyCount);
     }
 
@@ -73,6 +76,14 @@ public class Tweet implements Parcelable {
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         tweet.favoritesCount = jsonObject.getInt("favorite_count");
         tweet.retweetCount = jsonObject.getInt("retweet_count");
+
+        if (jsonObject.has("entities") && jsonObject.getJSONObject("entities").has("media")) {
+            String url = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url");
+            tweet.mediaURL = url + ":small";
+        } else {
+            tweet.mediaURL = null;
+        }
+
         return tweet;
     }
 
@@ -101,4 +112,7 @@ public class Tweet implements Parcelable {
         return favoritesCount;
     }
 
+    public String getMediaURL() {
+        return mediaURL;
+    }
 }

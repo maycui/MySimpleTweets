@@ -1,6 +1,9 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -9,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,12 +29,16 @@ import cz.msebera.android.httpclient.Header;
 public class ComposeActivity extends AppCompatActivity {
 
     private TwitterClient client;
+    Context context;
     EditText editText;
     TextView charCount;
     Tweet newTweet;
     View view;
     String screenName;
     String uid;
+    ImageView png;
+    ImageView gif;
+    ImageView location;
 
     public final String SCREEN_NAME = "screenname";
     public final String TWEET_ID = "tweetid";
@@ -40,6 +48,7 @@ public class ComposeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
+        context = this;
 
 
         Intent intent = getIntent();
@@ -50,6 +59,19 @@ public class ComposeActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.editText);
         charCount = (TextView) findViewById(R.id.charCount);
         charCount.setText(String.valueOf(140));
+
+
+        png = (ImageView) findViewById(R.id.png);
+        gif = (ImageView) findViewById(R.id.gif);
+        location = (ImageView) findViewById(R.id.location);
+
+
+        //setting tints
+        int highlightColor = context.getResources().getColor(R.color.brightblue);
+        PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(highlightColor, PorterDuff.Mode.SRC_ATOP);
+        png.getDrawable().setColorFilter(colorFilter);
+        gif.getDrawable().setColorFilter(colorFilter);
+        location.getDrawable().setColorFilter(colorFilter);
 
         if (screenName != null) {
             editText.setText("@" + screenName);

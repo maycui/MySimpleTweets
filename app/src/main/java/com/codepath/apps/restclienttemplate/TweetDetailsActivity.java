@@ -22,6 +22,7 @@ public class TweetDetailsActivity extends AppCompatActivity {
     TextView screenName;
     TextView tvBody;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -79,6 +79,16 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 .bitmapTransform(new RoundedCornersTransformation(context, 10, 0))
                 .into(holder.ivProfileImage);
 
+        //set media image
+        if (tweet.getMediaURL() != null) {
+            Glide.with(context)
+                    .load(tweet.getMediaURL())
+                    .bitmapTransform(new RoundedCornersTransformation(context, 15, 0))
+                    .into(holder.media);
+        } else {
+            holder.media.setVisibility(View.GONE);
+        }
+
 
         //reply
         holder.reply.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +102,15 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 }
             }
         });
+
+        holder.retweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tweet.getUser().getScreenName() != null) {
+                }
+            }
+        });
+
 
 
     }
@@ -137,6 +156,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public TextView replyN;
         public TextView likeN;
         public TextView retweetN;
+        public ImageView media;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -153,6 +173,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             replyN = (TextView) itemView.findViewById(R.id.replyN);
             likeN = (TextView) itemView.findViewById(R.id.likeN);
             retweetN = (TextView) itemView.findViewById(R.id.rtN);
+            media = (ImageView) itemView.findViewById(R.id.media);
             itemView.setOnClickListener(this);
         }
 
