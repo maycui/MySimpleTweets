@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -36,9 +35,11 @@ public class ComposeActivity extends AppCompatActivity {
     View view;
     String screenName;
     String uid;
+    Long retweetID;
     ImageView png;
     ImageView gif;
     ImageView location;
+    String body;
 
     public final String SCREEN_NAME = "screenname";
     public final String TWEET_ID = "tweetid";
@@ -54,6 +55,9 @@ public class ComposeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         screenName = intent.getStringExtra(SCREEN_NAME);
         uid = intent.getStringExtra(TWEET_ID);
+        retweetID = intent.getLongExtra("tweet", 0);
+        body = intent.getStringExtra("body");
+
 
         client = TwitterApp.getRestClient();
         editText = (EditText) findViewById(R.id.editText);
@@ -74,7 +78,9 @@ public class ComposeActivity extends AppCompatActivity {
         location.getDrawable().setColorFilter(colorFilter);
 
         if (screenName != null) {
-            editText.setText("@" + screenName);
+           editText.setText("@" + screenName);
+        } else if (body != null) {
+            editText.setText(body);
         }
 
         final TextWatcher txwatcher = new TextWatcher() {
@@ -96,13 +102,42 @@ public class ComposeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // send network request
                 view = v;
+                if (body != null) {
+                    client.sendRetweet(String.valueOf(retweetID), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            try {
+                                newTweet = Tweet.fromJSON(response);
+                                onSubmit(view);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-                if (uid != null) {
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            Log.d("TwitterClient", responseString);
+                            throwable.printStackTrace();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Log.d("TwitterClient", errorResponse.toString());
+                            throwable.printStackTrace();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                            Log.d("TwitterClient", errorResponse.toString());
+                            throwable.printStackTrace();
+                        }
+                    });
+
+                } else if (uid != null) {
                     client.sendReplyTweet(editText.getText().toString(), uid, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             try {
-                                Toast.makeText(ComposeActivity.this, "hello", Toast.LENGTH_SHORT).show();
                                 newTweet = Tweet.fromJSON(response);
                                 onSubmit(view);
                             } catch (JSONException e) {

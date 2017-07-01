@@ -10,13 +10,13 @@
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="18dp"
-        android:hint="what's happening?"
-        android:maxLength="140"
-        android:selectAllOnFocus="false"
+        android:layout_height="75dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"></EditText>
+        android:layout_marginTop="25dp"
+        android:hint="What's happening?"
+        android:maxLength="140"
+        android:selectAllOnFocus="false"></EditText>
 
 
     <Button

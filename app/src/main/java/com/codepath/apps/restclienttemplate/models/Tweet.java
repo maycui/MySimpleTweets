@@ -17,8 +17,10 @@ public class Tweet implements Parcelable {
     public User user;
     public String mediaURL;
     public String createdAt;
+    public String lmediaURL;
     public Integer retweetCount;
     public Integer favoritesCount;
+    public String retweeted;
     //public Integer replyCount;
 
 
@@ -30,6 +32,8 @@ public class Tweet implements Parcelable {
         retweetCount = in.readInt();
         favoritesCount= in.readInt();
         mediaURL = in.readString();
+        lmediaURL = in.readString();
+        retweeted = in.readString();
         //replyCount = in.readInt();
     }
 
@@ -43,9 +47,11 @@ public class Tweet implements Parcelable {
         dest.writeLong(uid);
         dest.writeParcelable(user, flags);
         dest.writeString(createdAt);
-        dest.writeLong(retweetCount);
-        dest.writeLong(favoritesCount);
+        dest.writeInt(retweetCount);
+        dest.writeInt(favoritesCount);
         dest.writeString(mediaURL);
+        dest.writeString(lmediaURL);
+        dest.writeString(retweeted);
         //dest.writeLong(replyCount);
     }
 
@@ -76,12 +82,15 @@ public class Tweet implements Parcelable {
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         tweet.favoritesCount = jsonObject.getInt("favorite_count");
         tweet.retweetCount = jsonObject.getInt("retweet_count");
+        tweet.retweeted = jsonObject.getString("retweeted");
 
         if (jsonObject.has("entities") && jsonObject.getJSONObject("entities").has("media")) {
             String url = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url");
             tweet.mediaURL = url + ":small";
+            tweet.lmediaURL = url + ":large";
         } else {
             tweet.mediaURL = null;
+            tweet.lmediaURL = null;
         }
 
         return tweet;
@@ -114,5 +123,13 @@ public class Tweet implements Parcelable {
 
     public String getMediaURL() {
         return mediaURL;
+    }
+
+    public String getLmediaURL() {
+        return lmediaURL;
+    }
+
+    public String getRetweeted() {
+        return retweeted;
     }
 }

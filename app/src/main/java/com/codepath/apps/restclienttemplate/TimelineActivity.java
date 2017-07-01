@@ -68,6 +68,14 @@ public class TimelineActivity extends AppCompatActivity {
         }
     }
 
+//    public void receiveRt(Tweet rT) {
+//        //Tweet newTweet = Parcels.unwrap(getIntent().getParcelableExtra("retweeted"));
+//        //Tweet newTweet = getIntent().getParcelableExtra("newTweet");
+//        tweets.add(0, rT);
+//        tweetAdapter.notifyItemInserted(0);
+//        rvTweets.scrollToPosition(0);
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +100,9 @@ public class TimelineActivity extends AppCompatActivity {
         });
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright);
+
+        //Tweet rT = Parcels.unwrap(getIntent().getParcelableExtra("retweeted"));
+        //receiveRt(rT);
 
     }
 

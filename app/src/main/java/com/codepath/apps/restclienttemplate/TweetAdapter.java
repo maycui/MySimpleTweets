@@ -34,6 +34,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     Context context;
     public final String SCREEN_NAME = "screenname";
     public final String TWEET_ID = "tweetid";
+    private TwitterClient client;
+
 
     //pass in the Tweets array in the constructor
     public TweetAdapter(List<Tweet> tweets) {
@@ -43,6 +45,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     // for each row, inflate the layout and cache references into ViewHolder
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
+        client = TwitterApp.getRestClient();
         LayoutInflater inflater = LayoutInflater.from(context);
         View tweetView = inflater.inflate(R.layout.item_tweet, parent, false);
         ViewHolder viewHolder = new ViewHolder(tweetView);
@@ -51,7 +54,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
     // bind the values based on the position of the element
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final Tweet tweet = mTweets.get(position);
         holder.tvUsername.setText(tweet.getUser().getName());
@@ -66,10 +69,19 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         //setting tints
         int highlightColor = context.getResources().getColor(R.color.grey);
-        PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(highlightColor, PorterDuff.Mode.SRC_ATOP);
+        final PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(highlightColor, PorterDuff.Mode.SRC_ATOP);
+
+        int blueColor = context.getResources().getColor(R.color.brightblue);
+        final PorterDuffColorFilter bluefilter = new PorterDuffColorFilter(highlightColor, PorterDuff.Mode.SRC_ATOP);
 
         holder.like.getDrawable().setColorFilter(colorFilter);
-        holder.retweet.getDrawable().setColorFilter(colorFilter);
+
+        if (tweet.getRetweeted() == "false") {
+            holder.retweet.getDrawable().setColorFilter(colorFilter);
+        } else {
+            holder.retweet.getDrawable().setColorFilter(bluefilter);
+        }
+
         holder.dm.getDrawable().setColorFilter(colorFilter);
 
 
@@ -107,7 +119,12 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 if (tweet.getUser().getScreenName() != null) {
+                    Intent i = new Intent(context, ComposeActivity.class);
+                    i.putExtra("tweet", tweet.getUid());
+                    i.putExtra("body", tweet.getBody());
+                    context.startActivity(i);
                 }
+
             }
         });
 
@@ -173,7 +190,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             replyN = (TextView) itemView.findViewById(R.id.replyN);
             likeN = (TextView) itemView.findViewById(R.id.likeN);
             retweetN = (TextView) itemView.findViewById(R.id.rtN);
-            media = (ImageView) itemView.findViewById(R.id.media);
+            media = (ImageView) itemView.findViewById(R.id.mediaD);
             itemView.setOnClickListener(this);
         }
 
