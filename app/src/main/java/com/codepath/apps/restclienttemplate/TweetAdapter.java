@@ -76,7 +76,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         holder.like.getDrawable().setColorFilter(colorFilter);
 
-        if (tweet.getRetweeted() == "false") {
+        if (tweet.getRetweeted().equals("false")) {
             holder.retweet.getDrawable().setColorFilter(colorFilter);
         } else {
             holder.retweet.getDrawable().setColorFilter(bluefilter);
@@ -127,6 +127,21 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
             }
         });
+
+        holder.ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tweet.getUser().getScreenName() != null) {
+                    Intent i = new Intent(context, ProfileActivity.class);
+                    i.putExtra("userID", tweet.getUser().getUid());
+                    i.putExtra("NAME", tweet.getUser().getScreenName());
+                    context.startActivity(i);
+                }
+
+            }
+        });
+
+
 
 
 
