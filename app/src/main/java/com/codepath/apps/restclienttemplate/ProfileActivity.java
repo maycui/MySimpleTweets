@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -15,15 +16,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ProfileActivity extends AppCompatActivity {
 
     TwitterClient client;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        context = this;
 
         String screenName = getIntent().getStringExtra("screen_name");
         String otherScreenName = getIntent().getStringExtra("NAME");
@@ -91,6 +95,8 @@ public class ProfileActivity extends AppCompatActivity {
         tvTagline.setText(user.getTagLine());
         tvFollowers.setText(user.getFollowersCount() + " Followers");
         tvFollowing.setText(user.getFollowingCount() + " Following");
-        Glide.with(this).load(user.getProfileImageUrl()).into(ivProfileImage);
+        Glide.with(this).load(user.getProfileImageUrl())
+                .bitmapTransform(new RoundedCornersTransformation(context, 10, 0))
+                .into(ivProfileImage);
     }
 }
