@@ -21,10 +21,10 @@ The following **required** functionality is completed:
 * [x] User can switch between Timeline and Mention views using tabs
   * [x] User can view their home timeline tweets
   * [x] User can view the recent mentions of their username
-* [x] User can navigate to view their own profile (2 points)
-  * [x] User can see picture, tagline, # of followers, # of following, and tweets on their profile.
-* [x] User can click on the profile image in any tweet to see another user's profile. (3 points)
-  * [x] User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
+* [x] User can navigate to view their own profile
+  * [x] User can see picture, tagline, # of followers, # of following, and tweets on their profile
+* [x] User can click on the profile image in any tweet to see another user's profile
+  * [x] User can see picture, tagline, # of followers, # of following, and tweets of clicked user
   * [x] Profile view should include that user's timeline
 
 The following **optional** features are implemented:
@@ -32,7 +32,7 @@ The following **optional** features are implemented:
 * [x] User can **see a counter with total number of characters left for tweet** on compose tweet page
 * [x] User can **pull down to refresh tweets timeline**
 * [x] User is using **"Twitter branded" colors and styles**
-* [ ] User sees an **indeterminate progress indicator** when any background or network task is happening
+* [x] User sees an **indeterminate progress indicator** when any background or network task is happening
 * [x] User can **select "reply" from detail view to respond to a tweet**
   * [x] User that wrote the original tweet is **automatically "@" replied in compose**
 * [x] User can tap a tweet to **open a detailed tweet view**
