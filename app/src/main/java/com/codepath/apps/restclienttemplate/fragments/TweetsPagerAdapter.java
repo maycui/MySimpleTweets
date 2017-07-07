@@ -3,13 +3,12 @@ package com.codepath.apps.restclienttemplate.fragments;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
 /**
  * Created by mayc on 7/3/17.
  */
 
-public class TweetsPagerAdapter extends FragmentPagerAdapter {
+public class TweetsPagerAdapter extends SmartFragmentStatePagerAdapter {
 
     private String tabTitles[] = new String[] {"Home", "Mentions"};
     private Context context;
@@ -32,7 +31,6 @@ public class TweetsPagerAdapter extends FragmentPagerAdapter {
             return null;
         }
     }
-
 
     public CharSequence getPageTitle(int position) {
         return tabTitles[position];

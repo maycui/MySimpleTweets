@@ -21,6 +21,7 @@ public class Tweet implements Parcelable {
     public Integer retweetCount;
     public Integer favoritesCount;
     public String retweeted;
+
     //public Integer replyCount;
 
 
@@ -82,7 +83,6 @@ public class Tweet implements Parcelable {
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         tweet.favoritesCount = jsonObject.getInt("favorite_count");
         tweet.retweetCount = jsonObject.getInt("retweet_count");
-        tweet.retweeted = jsonObject.getString("retweeted");
 
         if (jsonObject.has("entities") && jsonObject.getJSONObject("entities").has("media")) {
             String url = jsonObject.getJSONObject("entities").getJSONArray("media").getJSONObject(0).getString("media_url");

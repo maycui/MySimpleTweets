@@ -32,8 +32,6 @@ public class TweetsListFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
 
 
-    //inflation happens inside onCreateView
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,7 +50,6 @@ public class TweetsListFragment extends Fragment {
             }
         });
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright);
-
         return v;
     }
 

@@ -11,13 +11,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.fragments.HomeTimelineFragment;
 import com.codepath.apps.restclienttemplate.fragments.TweetsPagerAdapter;
+import com.codepath.apps.restclienttemplate.models.Tweet;
+
+import org.parceler.Parcels;
 
 public class TimelineActivity extends AppCompatActivity {
 
     private final int REQUEST_CODE = 20;
     MenuItem miActionProgressItem;
+    TweetsPagerAdapter adapterViewPager;
+    Tweet updateTweet;
 
 
     @Override
@@ -47,13 +54,6 @@ public class TimelineActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        // Return to finish
-        return super.onPrepareOptionsMenu(menu);
-    }
-
     public void showProgressBar() {
         // Show progress item
         miActionProgressItem.setVisible(true);
@@ -64,18 +64,25 @@ public class TimelineActivity extends AppCompatActivity {
         miActionProgressItem.setVisible(false);
     }
 //
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        // REQUEST_CODE is defined above
-//        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-//            Tweet newTweet = Parcels.unwrap(data.getParcelableExtra("newTweet"));
-////            tweets.add(0, newTweet);
-////            tweetAdapter.notifyItemInserted(0);
-////            rvTweets.scrollToPosition(0);
-//            // Toast the name to display temporarily on screen
-//            Toast.makeText(this, newTweet.body, Toast.LENGTH_LONG).show();
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            Tweet newTweet = Parcels.unwrap(data.getParcelableExtra("newTweet"));
+            HomeTimelineFragment fragmentHomeTweets =
+                    (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(0);
+            fragmentHomeTweets.appendTweet(newTweet);
+            // Toast the name to display temporarily on screen
+            Toast.makeText(this, newTweet.body, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    public void newContentUpdate(Tweet t) {
+        HomeTimelineFragment fragmentHomeTweets =
+                (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(0);
+        fragmentHomeTweets.appendTweet(t);
+    }
 
 
     @Override
@@ -84,10 +91,18 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
         //set the adapter for the pager
-        vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager(), this));
+        //vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager(), this));
+        adapterViewPager = new TweetsPagerAdapter(getSupportFragmentManager(), this);
+        vpPager.setAdapter(adapterViewPager);
+
         //setup the TabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(vpPager);
+
+        updateTweet =  Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
+        if (updateTweet != null) {
+            newContentUpdate(updateTweet);
+        }
     }
 
 //    @Override

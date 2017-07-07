@@ -106,7 +106,7 @@ public class ComposeActivity extends AppCompatActivity {
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             try {
                                 newTweet = Tweet.fromJSON(response);
-                                onSubmit(view);
+                                backToTimeline(view);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -120,7 +120,7 @@ public class ComposeActivity extends AppCompatActivity {
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                             try {
                                 newTweet = Tweet.fromJSON(response);
-                                onSubmit(view);
+                                backToTimeline(view);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -150,6 +150,12 @@ public class ComposeActivity extends AppCompatActivity {
         data.putExtra("newTweet", Parcels.wrap(newTweet));
         setResult(RESULT_OK, data); // set result code and bundle data for response
         finish(); // closes the activity, pass data to parent
+    }
+
+    public void backToTimeline(View v) {
+        Intent t = new Intent(this, TimelineActivity.class);
+        t.putExtra("newTweet", Parcels.wrap(newTweet));
+        startActivity(t);
     }
 
 }

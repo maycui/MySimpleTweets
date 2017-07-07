@@ -76,11 +76,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         holder.like.getDrawable().setColorFilter(colorFilter);
 
-        if (tweet.getRetweeted().equals("false")) {
-            holder.retweet.getDrawable().setColorFilter(colorFilter);
-        } else {
-            holder.retweet.getDrawable().setColorFilter(bluefilter);
-        }
+
+        holder.retweet.getDrawable().setColorFilter(colorFilter);
+
 
         holder.dm.getDrawable().setColorFilter(colorFilter);
 
@@ -119,6 +117,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 if (tweet.getUser().getScreenName() != null) {
+                    tweet.retweeted = "true";
                     Intent i = new Intent(context, ComposeActivity.class);
                     i.putExtra("tweet", tweet.getUid());
                     i.putExtra("body", tweet.getBody());
