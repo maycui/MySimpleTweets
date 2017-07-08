@@ -8,8 +8,6 @@ import com.github.scribejava.core.builder.api.BaseApi;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import static android.R.id.message;
-
 /*
  * 
  * This is the object responsible for communicating with a REST API. 
@@ -47,12 +45,11 @@ public class TwitterClient extends OAuthBaseClient {
 	// DEFINE METHODS for different API endpoints here
 
 
-    public void searchTweets (String search, AsyncHttpResponseHandler handler) {
-        String apiUrl = getApiUrl("search/tweets.json");
-        // Can specify query string params directly or through RequestParams.
+    public void getsearchTweets (String search, AsyncHttpResponseHandler handler) {
+        String apiUrl = "https://api.twitter.com/1.1/search/tweets.json";
         RequestParams params = new RequestParams();
         params.put("q", search);
-        client.post(apiUrl, params, handler);
+        client.get(apiUrl, params, handler);
     }
 
 	public void getHomeTimeline(AsyncHttpResponseHandler handler) {

@@ -41,8 +41,11 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".TweetDetailsActivity"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".ProfileActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ProfileActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".SearchActivity"
             android:theme="@style/AppTheme"></activity>
     </application>
 

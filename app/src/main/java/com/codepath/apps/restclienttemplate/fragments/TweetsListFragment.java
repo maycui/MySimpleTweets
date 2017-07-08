@@ -72,20 +72,6 @@ public class TweetsListFragment extends Fragment {
     }
 
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        // REQUEST_CODE is defined above
-//        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-//            // Extract name value from result extras
-//            Tweet newTweet = Parcels.unwrap(data.getParcelableExtra("newTweet"));
-//            //Tweet newTweet = getIntent().getParcelableExtra("newTweet");
-//            tweets.add(0, newTweet);
-//            tweetAdapter.notifyItemInserted(0);
-//            rvTweets.scrollToPosition(0);
-//            // Toast the name to display temporarily on screen
-//            Toast.makeText(this, newTweet.body, Toast.LENGTH_LONG).show();
-//        }
-//    }
 
     public void populateTimeline() {}
 
